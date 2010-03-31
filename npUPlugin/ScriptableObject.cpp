@@ -1,0 +1,2 @@
+
+#include "UPlugin/ScriptableObject.h"

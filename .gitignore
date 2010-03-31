@@ -1,0 +1,9 @@
+*.suo
+*.ncd
+*.ncb
+bin
+lib
+Debug
+Release
+*.obj
+*.user
