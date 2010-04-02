@@ -3,7 +3,7 @@
 
 #include "npapi.h"
 #include "npruntime.h"
-#include "npUPlugin.h"
+#include "UPlugin/npUPlugin.h"
 
 namespace UPlugin {
 
