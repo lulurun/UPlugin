@@ -41,7 +41,7 @@ bool Plugin::onNPP_New(int16_t argc, char* argn[], char* argv[]) {
 		if (n == "UPlugin.DebugMode") {
 			std::string value(v);
 			if (value == "on") {
-				MessageBox(NULL, "DEBUG START", "UPLUGIN", MB_OK);
+				//MessageBox(NULL, "DEBUG START", "UPLUGIN", MB_OK);
 			}
 		}
 	}

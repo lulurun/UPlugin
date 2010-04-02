@@ -22,7 +22,7 @@
 			ConfigurationType="2"
 			UseOfMFC="0"
 			CharacterSet="2"
-			ManagedExtensions="1"
+			ManagedExtensions="0"
 			EnableManagedIncrementalBuild="0"
 			>
 			<Tool
@@ -44,8 +44,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\include;&quot;..\include\xulrunner-sdk&quot;"
-				AdditionalUsingDirectories="..\bin\"
-				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;UPLUGIN_EXPORTS"
+				AdditionalUsingDirectories=""
+				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;UPLUGIN_EXPORTS;POCO_STATIC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
@@ -63,10 +63,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PocoFoundationd.lib"
+				IgnoreImportLibrary="false"
+				AdditionalDependencies="PocoFoundationmtd.lib"
 				OutputFile="..\bin\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\extlib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="npUPlugin.def"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -141,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="PocoFoundation.lib"
+				AdditionalDependencies="PocoFoundationmt.lib"
 				OutputFile="..\bin\$(ProjectName).dll"
 				AdditionalLibraryDirectories="..\extlib"
 				ModuleDefinitionFile="npUPlugin.def"

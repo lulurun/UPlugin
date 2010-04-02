@@ -19,7 +19,7 @@ bool DefaultPluginApp::HasMethod(NPIdentifier name)
 
 bool DefaultPluginApp::Invoke(NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result)
 {
-	MessageBox(NULL, "THIS IS DEFAULT PLUGIN", "UPLUGIN", MB_OK);
+	//MessageBox(NULL, "THIS IS DEFAULT PLUGIN", "UPLUGIN", MB_OK);
 	return true;
 }
 

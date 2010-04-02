@@ -51,7 +51,6 @@ bool ScriptablePluginObjectBase::setWindowBase(NPWindow *pWindow)
 
 bool ScriptablePluginObjectBase::setWindow(NPWindow *pWindow)
 {
-	System::Windows::Forms::MessageBox::Show("override [setWindow] !!");
 	return true;
 }
 
