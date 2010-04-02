@@ -1,5 +1,5 @@
-#ifndef __SCRIPTABLEBASE_H__
-#define __SCRIPTABLEBASE_H__
+#ifndef __UPLUGIN_SCRIPTABLEBASE_H__
+#define __UPLUGIN_SCRIPTABLEBASE_H__
 
 #include "npfunctions.h"
 #include "UPlugin/npUPlugin.h"
@@ -79,5 +79,5 @@ namespace UPlugin {
 
 };
 
-#endif // __SCRIPTABLEBASE_H__
+#endif // __UPLUGIN_SCRIPTABLEBASE_H__
 

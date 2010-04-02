@@ -1,5 +1,5 @@
-#ifndef __DEFAULTPLUGINAPP_H__
-#define __DEFAULTPLUGINAPP_H__
+#ifndef __UPLUGIN_DEFAULTPLUGINAPP_H__
+#define __UPLUGIN_DEFAULTPLUGINAPP_H__
 
 #include "UPlugin/ScriptableBase.h"
 
@@ -24,5 +24,5 @@ DECLARE_NPOBJECT_CLASS_WITH_BASE(DefaultPluginApp, AllocateDefaultPluginAppObjec
 
 };
 
-#endif // __DEFAULTPLUGINAPP_H__
+#endif // __UPLUGIN_DEFAULTPLUGINAPP_H__
 

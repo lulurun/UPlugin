@@ -1,5 +1,5 @@
-#ifndef __PLUGIN_H__
-#define __PLUGIN_H__
+#ifndef __UPLUGIN_PLUGIN_H__
+#define __UPLUGIN_PLUGIN_H__
 
 #include <map>
 #include <string>
@@ -57,4 +57,4 @@ private:
 
 };
 
-#endif // __PLUGIN_H__
+#endif // __UPLUGIN_PLUGIN_H__

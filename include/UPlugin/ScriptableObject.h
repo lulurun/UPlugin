@@ -59,6 +59,13 @@ public:
 		return this->_method_table.invokeMethod(name, args, argCount, result);
 	};
 
+protected:
+	std::string identifier;
+
+public:
+	const std::string getIdentifier() const;
+	const std::string getInstallDir() const;
+
 };
 
 };

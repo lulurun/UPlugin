@@ -1,5 +1,5 @@
-#ifndef __FUNCMAP_H__
-#define __FUNCMAP_H__
+#ifndef __UPLUGIN_FUNCMAP_H__
+#define __UPLUGIN_FUNCMAP_H__
 
 #include "npapi.h"
 #include "npruntime.h"
@@ -67,4 +67,4 @@ bool UPluginMethodMap<T>::invokeMethod(NPIdentifier i, const NPVariant *args, ui
 
 };
 
-#endif // __FUNCMAP_H__
+#endif // __UPLUGIN_FUNCMAP_H__
