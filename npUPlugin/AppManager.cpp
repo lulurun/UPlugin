@@ -2,6 +2,7 @@
 #include "UPlugin/ScriptableObject.h"
 #include "AppManager.h"
 #include "DefaultPluginApp.h"
+#include "Env.h"
 
 //#include "Poco/ClassLoader.h"
 #include "Poco/Manifest.h"
@@ -10,7 +11,6 @@
 using namespace Poco;
 using namespace UPlugin;
 
-static const std::string APP_DLL_DIR = "E:\\UPlugin\\git_repo\\bin";
 static const std::string CREATEINSTANCE_FUNC_PREFIX = "CreateInstance_";
 static const std::string CREATEINSTANCE_FUNC_SUFFIX = "Plugin";
 static const std::string APP_DLL_PREFIX = "UPlugin.";
@@ -72,7 +72,7 @@ std::string AppManager::GetAppDLLPath(const std::string &name, const std::string
 	} else {
 		app_dll_name = dllname;
 	}
-	return APP_DLL_DIR + "\\" + app_dll_name;
+	return Env::GetInstance()->getAppBaseDirectory() + "\\" + name + "\\" + app_dll_name;
 }
 
 std::string AppManager::GetAppCreateInstanceSymbol(const std::string &name) {

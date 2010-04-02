@@ -13,6 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPlugin.HelloWorld", "examp
 		{A0241E11-B2EC-4BCF-ABCC-EC382A370703} = {A0241E11-B2EC-4BCF-ABCC-EC382A370703}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "test\Test\Test.vcproj", "{06E0F2C0-6070-4343-95B9-A907B0967BA8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0241E11-B2EC-4BCF-ABCC-EC382A370703} = {A0241E11-B2EC-4BCF-ABCC-EC382A370703}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +36,10 @@ Global
 		{AC427849-9FE2-4346-AB50-76AF6995A5A5}.Debug|Win32.Build.0 = Debug|Win32
 		{AC427849-9FE2-4346-AB50-76AF6995A5A5}.Release|Win32.ActiveCfg = Release|Win32
 		{AC427849-9FE2-4346-AB50-76AF6995A5A5}.Release|Win32.Build.0 = Release|Win32
+		{06E0F2C0-6070-4343-95B9-A907B0967BA8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{06E0F2C0-6070-4343-95B9-A907B0967BA8}.Debug|Win32.Build.0 = Debug|Win32
+		{06E0F2C0-6070-4343-95B9-A907B0967BA8}.Release|Win32.ActiveCfg = Release|Win32
+		{06E0F2C0-6070-4343-95B9-A907B0967BA8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

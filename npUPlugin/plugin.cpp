@@ -67,7 +67,7 @@ bool Plugin::onNPP_SetWindows(NPWindow* pNPWindow) {
 
 NPObject *Plugin::getScriptableObject() {
 	if (!m_scriptable) {
-		m_scriptable = AppManager::Instance()->createScriptable(m_npp, m_app_name, m_app_dllname);
+		m_scriptable = AppManager::GetInstance()->createScriptable(m_npp, m_app_name, m_app_dllname);
 	}
 
 	if (m_scriptable) {

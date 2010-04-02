@@ -18,7 +18,7 @@ using namespace Poco;
 
 namespace UPlugin {
 
-class AppManager
+class UPlugin_API AppManager
 {
 private:
 	typedef ScriptablePluginObjectBase *(*PluginCreateInstance_Func)(NPP);
@@ -34,7 +34,7 @@ public:
 	ScriptablePluginObjectBase *createScriptable(NPP npp, const std::string &name, const std::string &dllname);
 	void destoryScriptable();
 
-	static AppManager *Instance() {
+	static AppManager *GetInstance() {
 		static AppManager *_instance = NULL;
 		if (_instance == NULL) {
 			_instance = new AppManager();
