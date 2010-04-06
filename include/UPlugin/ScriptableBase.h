@@ -1,6 +1,7 @@
 #ifndef __UPLUGIN_SCRIPTABLEBASE_H__
 #define __UPLUGIN_SCRIPTABLEBASE_H__
 
+#include <string>
 #include "npfunctions.h"
 #include "UPlugin/npUPlugin.h"
 
@@ -12,8 +13,25 @@ namespace UPlugin {
 		NPP mNpp;
 		NPWindow *m_pWindow;
 		bool m_has_window;
+		bool m_use_dotnetsupport;
+		std::string m_identifier;
 
 		virtual bool setWindow(NPWindow *pWindow);
+
+	public:
+		const bool hasWindow() const {
+			return m_has_window;	
+		};
+		const bool useDotNetSupport() const {
+			return m_use_dotnetsupport;
+		};
+
+		virtual void initDotNetSupport(const std::string &app_base_dir) {
+		};
+
+		virtual const std::string &getIdentifier() {
+			return m_identifier;
+		}
 
 	public:
 		ScriptablePluginObjectBase(NPP npp);
@@ -57,6 +75,8 @@ namespace UPlugin {
 			uint32_t argCount, NPVariant *result);
 
 	};
+
+	typedef unsigned long long Managed_ScriptableBase_PTR_TYPE;
 
 #define DECLARE_NPOBJECT_CLASS_WITH_BASE(_class, ctor)                        \
 	static NPClass s##_class##_NPClass = {                                        \

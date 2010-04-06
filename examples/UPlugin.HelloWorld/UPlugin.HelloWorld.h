@@ -5,7 +5,7 @@
 using namespace System;
 using namespace UPlugin;
 
-class UPlugin_API HelloWorldPlugin : public ScriptablePluginObject<HelloWorldPlugin>
+class HelloWorldPlugin : public ScriptablePluginObject<HelloWorldPlugin>
 {
 private:
 	std::string _message;
@@ -13,10 +13,13 @@ public:
 	HelloWorldPlugin()
 		: ScriptablePluginObject()
 	{
+		m_identifier = "HelloWorld";
 	}
 	HelloWorldPlugin(NPP npp)
 		: ScriptablePluginObject(npp)
 	{
+		m_identifier = "HelloWorld";
+
 		_message = "Hello World";
 		register_method("say", this, &HelloWorldPlugin::say);
 	};

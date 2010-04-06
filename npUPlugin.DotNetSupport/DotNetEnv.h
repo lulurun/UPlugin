@@ -1,7 +1,7 @@
 #pragma once
 
 namespace UPlugin {
-namespace DotNetSupport {
+namespace DotNet {
 
 ref class DotNetEnv
 {

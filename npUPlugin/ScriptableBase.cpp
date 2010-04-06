@@ -13,7 +13,7 @@ static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 static WNDPROC lpOldProc = NULL;
 
 ScriptablePluginObjectBase::ScriptablePluginObjectBase(NPP npp)
-	:mNpp(npp), m_pWindow(NULL), m_has_window(false)
+	:mNpp(npp), m_pWindow(NULL), m_has_window(false), m_use_dotnetsupport(false)
 {
 }
 

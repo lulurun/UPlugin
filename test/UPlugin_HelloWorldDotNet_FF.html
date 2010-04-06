@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>3Di-OpenViewer Test Page</title>
+</head>
+
+<body>
+	<input id="js_debug_text_fix" type="text" name="debug_info" value=""/>
+
+	<div id="js_object_fix">
+	<object id="ctrl" type="application/x-uplugin" width="0" height="0">
+		<PARAM name="UPlugin.Name" value="HelloWorldDotNet" />
+		<PARAM name="UPlugin.DLLName" value="UPlugin.HelloWorldDotNet.dll" />
+		<PARAM name="UPlugin.DebugMode" value="on" />
+	</object>
+	</div>
+
+	<hr />
+
+	<input type="button" value="SamplePlugin" onclick="CallSamplePlugin();">
+
+	<script language="javascript">
+<!--
+function CallSamplePlugin() {
+	document.getElementById("ctrl").say();
+}
+-->
+	</script>
+
+</body>
+
+</html>

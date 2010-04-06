@@ -2,11 +2,11 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="UPlugin.HelloWorld"
-	ProjectGUID="{AC427849-9FE2-4346-AB50-76AF6995A5A5}"
-	RootNamespace="UPluginHelloWorld"
+	Name="UPlugin.HelloWorldDotNet"
+	ProjectGUID="{23E77797-5EE6-4CCD-AA6E-8F48F2A4E92B}"
+	RootNamespace="UPluginHelloWorldDotNet"
 	Keyword="ManagedCProj"
-	TargetFrameworkVersion="131072"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			ManagedExtensions="1"
 			>
 			<Tool
@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\include\xulrunner-sdk&quot;;..\..\include"
-				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;"
+				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;UPLUGIN_DOTNET"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -61,7 +61,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="npPlugin.lib"
-				OutputFile="..\..\bin\App\HelloWorld\$(ProjectName).dll"
+				OutputFile="..\..\bin\App\HelloWorldDotNet\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="true"
@@ -95,7 +95,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			ManagedExtensions="1"
 			WholeProgramOptimization="1"
 			>
@@ -116,11 +116,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				AdditionalIncludeDirectories="&quot;..\..\include\xulrunner-sdk&quot;;..\..\include"
-				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;NDEBUG;UPLUGIN_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -135,10 +133,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="npPlugin.lib"
-				OutputFile="..\bin\$(ProjectName).dll"
+				AdditionalDependencies="$(NoInherit)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\lib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -181,10 +177,16 @@
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
-		<AssemblyReference
-			RelativePath="System.Windows.Forms.dll"
-			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-			MinFrameworkVersion="131072"
+		<ProjectReference
+			ReferencedProjectIdentifier="{56AE1249-D2CD-4CC5-8CB7-64058FF365B2}"
+			RelativePathToProject=".\examples\HelloworldDotNet\HelloworldDotNet.csproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{116C308D-3E4E-42AE-9E0C-4E3F9CE82B28}"
+			CopyLocal="false"
+			CopyLocalDependencies="false"
+			CopyLocalSatelliteAssemblies="false"
+			RelativePathToProject=".\npUPlugin.DotNetSupport\npUPlugin.DotNetSupport.vcproj"
 		/>
 	</References>
 	<Files>
@@ -194,7 +196,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\UPlugin.HelloWorld.cpp"
+				RelativePath=".\UPlugin.HelloWor‚ŒdDotNet.cpp"
 				>
 			</File>
 		</Filter>
@@ -204,7 +206,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\UPlugin.HelloWorld.h"
+				RelativePath=".\UPlugin.HelloWorldDotNet.h"
 				>
 			</File>
 		</Filter>

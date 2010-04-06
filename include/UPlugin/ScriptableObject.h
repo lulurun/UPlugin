@@ -19,7 +19,7 @@ Allocate##__class_name__##Object(NPP npp, NPClass *aClass)		\
 DECLARE_NPOBJECT_CLASS_WITH_BASE(__class_name__,				\
 	Allocate##__class_name__##Object);							\
 																\
-extern "C" UPlugin_API UPlugin::ScriptablePluginObjectBase *	\
+extern "C" EXPORT_FUNC UPlugin::ScriptablePluginObjectBase *	\
 CreateInstance_##__class_name__##(NPP npp) {					\
 	return (UPlugin::ScriptablePluginObjectBase *)				\
 		UPlugin::Util::CreateNPObject(npp,						\
@@ -32,14 +32,13 @@ class ScriptablePluginObject : public ScriptablePluginObjectBase
 {
 private:
 	// TODO @@@ lock method_table
-	UPluginMethodMap<T> _method_table;
+	UPluginMethodMap<T> m_method_table;
+
+protected:
+	std::string m_identifier;
 
 public:
-	ScriptablePluginObject()
-		:ScriptablePluginObjectBase(NULL)
-	{
-	};
-	ScriptablePluginObject(NPP npp)
+	ScriptablePluginObject(NPP npp = NULL)
 		:ScriptablePluginObjectBase(npp)
 	{
 	};
@@ -48,23 +47,25 @@ public:
 	};
 
 	void register_method(const std::string &name, T *obj, bool (T::*method)(const NPVariant *, uint32_t, NPVariant *)){
-		_method_table.set(Util::GetStringIdentifier(name.c_str()), obj, method);
+		m_method_table.set(Util::GetStringIdentifier(name.c_str()), obj, method);
 	};
 
 	bool HasMethod(NPIdentifier name) {
-		return _method_table.contains(name);
+		return m_method_table.contains(name);
 	};
 
 	bool Invoke(NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result) {
-		return this->_method_table.invokeMethod(name, args, argCount, result);
+		return this->m_method_table.invokeMethod(name, args, argCount, result);
 	};
 
-protected:
-	std::string identifier;
-
 public:
-	const std::string getIdentifier() const;
-	const std::string getInstallDir() const;
+	const std::string getIdentifier() const {
+		return m_identifier;
+	};
+	const std::string getInstallDir() const {
+		// TODO @@@ get from Env
+		return "";
+	};
 
 };
 

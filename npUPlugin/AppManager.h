@@ -22,26 +22,21 @@ class UPlugin_API AppManager
 {
 private:
 	typedef ScriptablePluginObjectBase *(*PluginCreateInstance_Func)(NPP);
-	AppManager(void);
-	~AppManager(void);
+	typedef void(*EnableDotNetSupport_Func)(const std::string &dotnetsupport_dll);
 
 	SharedLibrary* m_library;
+	SharedLibrary* m_library_dotnetsupport;
 
 	static std::string GetAppDLLPath(const std::string &name, const std::string &dllname);
 	static std::string GetAppCreateInstanceSymbol(const std::string &name);
 
-public:
-	ScriptablePluginObjectBase *createScriptable(NPP npp, const std::string &name, const std::string &dllname);
 	void destoryScriptable();
 
-	static AppManager *GetInstance() {
-		static AppManager *_instance = NULL;
-		if (_instance == NULL) {
-			_instance = new AppManager();
-		}
-		return _instance;
-	};
+public:
+	AppManager(void);
+	~AppManager(void);
 
+	ScriptablePluginObjectBase *createScriptable(NPP npp, const std::string &name, const std::string &dllname);
 };
 
 };

@@ -1,8 +1,9 @@
 
 #include "UPlugin/ScriptableObject.h"
+#include "UPlugin/Env.h"
+#include "UPlugin/DotNetSupportHelper.h"
 #include "AppManager.h"
 #include "DefaultPluginApp.h"
-#include "Env.h"
 
 //#include "Poco/ClassLoader.h"
 #include "Poco/Manifest.h"
@@ -40,8 +41,16 @@ ScriptablePluginObjectBase *AppManager::createScriptable(NPP npp, const std::str
 		{
 			PluginCreateInstance_Func createInstanceFunc = (PluginCreateInstance_Func) m_library->getSymbol(createInstanceSymbol);
 			obj = (*createInstanceFunc)(npp);
+			if (obj->useDotNetSupport()) {
+#ifdef UPLUGIN_DOTNET
+				obj->initDotNetSupport(Env::GetInstance()->getAppBaseDirectory());
+#else
+				// TODO @@@ load managed code !!
+				throw 1;
+#endif
+			}
 		} else {
-			// TODO @@@ not a correct plugin app
+			// TODO @@@ log not a correct plugin app
 			throw 1;
 		}
 	} catch (std::exception &e) {
@@ -62,6 +71,10 @@ void AppManager::destoryScriptable() {
 	if (m_library) {
 		m_library->unload();
 		delete m_library;
+	}
+	if (m_library_dotnetsupport) {
+		m_library_dotnetsupport->unload();
+		delete m_library_dotnetsupport;
 	}
 }
 

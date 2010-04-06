@@ -7,9 +7,9 @@ using namespace System;
 using namespace System::Text;
 
 namespace UPlugin {
-	namespace DotNetSupport {
+	namespace DotNet {
 
-		ref class DotNetUtil
+		public ref class DotNetUtil
 		{
 		public:
 			static String^ NPVariantToString(NPVariant value)

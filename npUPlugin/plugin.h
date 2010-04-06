@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include "UPlugin/ScriptableBase.h"
+#include "AppManager.h"
 
 namespace UPlugin {
 
@@ -44,6 +45,8 @@ private:
 	ScriptablePluginObjectBase* m_scriptable;
 	bool m_windowset;
 	HWND mhWnd;
+
+	AppManager m_app_mgr;
 
 	// app settings
 	std::string m_app_name;
