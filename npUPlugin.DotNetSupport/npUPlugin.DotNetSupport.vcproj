@@ -203,10 +203,6 @@
 				RelativePath=".\DotNetSupport.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\DotNetUtil.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="ヘッダー ファイル"
@@ -223,10 +219,6 @@
 			</File>
 			<File
 				RelativePath=".\DotNetSupport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DotNetUtil.h"
 				>
 			</File>
 		</Filter>
