@@ -2,7 +2,6 @@
 
 #include "UPlugin/ScriptableBase.h"
 #include "DotNetClassLoader.h"
-#include "DotNetEnv.h"
 
 using namespace System::Threading;
 using namespace System::Collections::Generic;
