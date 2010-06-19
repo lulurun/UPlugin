@@ -136,8 +136,9 @@ bool ViewerLauncherPlugin::launch(const NPVariant *args, uint32_t argCount, NPVa
 		psi->UseShellExecute = false;
 		*/
 		System::Diagnostics::Process::Start(psi);
-	} catch (Exception ^e) {
+	} catch (Exception ^) {
 		// TODO @@@ log ??
+		ERROR_LOG("Error launch viewer. .Net exception " << viewer);
 		return true;
 	}
 #endif
