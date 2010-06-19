@@ -75,3 +75,17 @@ bool Util::NPVariantParseDouble(NPVariant value, double* result)
 		return false;
 	}
 }
+
+bool Util::NPVariantParseBoolean(NPVariant value, bool* result)
+{
+	if (NPVARIANT_IS_NULL(value)) {
+		*result = false;
+		return true;
+	} else if (NPVARIANT_IS_BOOLEAN(value)) {
+		*result = (bool)NPVARIANT_TO_BOOLEAN(value);
+		return true;
+	} else {
+		*result = false;
+		return true;
+	}
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>UPlugin - AppManager Test Page</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/UPlugin.js"></script>
+	<script type="text/javascript" src="js/UPlugin.AppManager.js"></script>
+</head>
+
+<body>
+<h1>AppManager</h1>
+<hr>
+
+<h3>Operations</h3>
+<ul style="list-style-type: none">
+	<li><sub>(Application Name)<font color="red">[required]</font></sub><br/>
+	App Name: <input type="text" id="name" size="20" value="SpaceAgent">
+	</li>
+	<li><sub>(Where to check the version)<font color="red">[required]</font></sub><br/>
+	App URL : <input type="text" id="url" size="100" value="http://www.wolfdrawer.net/softwares/UPlugin/version_info.cgi?name=SpaceAgent&format=json">
+	</li>
+	<li><sub>(Which file to check the version. UPlugin.{AppName}.dll if none)</sub><br/>
+	Key File: <input type="text" id="key" size="20" value="bin\SpaceApp.exe">
+	</li>
+	<li><sub>(Required version. Latest version if none)</sub><br/>
+	Version : <input type="text" id="ver" size="20" value="">
+	</li>
+</ul>
+
+<input type="button" value="RegularUpdate" onclick="RegularUpdate();">
+<br/>
+<input type="button" value="Install" onclick="Install();">
+<input type="button" value="Uninstall" onclick="Uninstall();">
+<input type="button" value="IsInstalled" onclick="IsInstalled();">
+
+
+<h5>Operation Result:</h5>
+<div id="op_res"></div>
+<div id"status">
+<span id="status_label"></span><span id="status_loading_img"></span>
+</div>
+
+<h3>Application List</h3>
+<input type="button" value="Reload Application List" onclick="ReloadAppList();"><br/>
+<div id="app_list"></div>
+
+<script language="javascript">
+$(document).ready(function(){
+  ClearResult();
+  gAppManager.init();
+  ReloadAppList();
+});
+
+function ClearResult() {
+  $('#op_res').empty();
+  $('#status_label').empty();
+  $('#status_loading_img').empty();
+}
+
+function OnStateChange(status) {
+  $('#status_label').text(gAppManager.MESSAGE(status));
+  if (status == gAppManager.STATE.CHK_VERSION ||
+      status == gAppManager.STATE.DOWNLOAD_PKG ||
+      status == gAppManager.STATE.EXTRACT_PKG ||
+      status == gAppManager.STATE.CHK_UPDATE ||
+      status == gAppManager.STATE.INSTALL) {
+    $('#status_loading_img').html(gLoadingGIF);
+  } else {
+    if (status == gAppManager.STATE.FINISH) {
+      ReloadAppList();
+    }
+    $('#status_loading_img').empty();
+  }
+}
+
+function RegularUpdate(interval) {
+  var name = $('#name').val();
+  var url = $('#url').val();
+  var key_file = $('#key').val();
+  if (!interval) interval = 10;
+
+  var installed = gAppManager.getInstalled(name);
+  if (installed != null) {
+    var dt = new Date();
+    var epoch = dt.getTime() / 1000;
+    var last_inst = installed.upd;
+    var since_lastupd = epoch - last_inst;
+    if (since_lastupd > interval) {
+      // check update
+      var latest_ver = "";
+      var vi_url = url + "&format=json&callback=?";	
+      $.getJSON(vi_url, function(version_info){
+        if (installed.ver != latest_ver) {
+          var cbOnStateChange = new UPluginCallback(OnStateChange, null);
+          gAppManager.install(name, url, key_file, latest_ver, cbOnStateChange);
+        }
+      });
+    }
+  } else {
+    // not installed
+    var cbOnStateChange = new UPluginCallback(OnStateChange, null);
+    gAppManager.install(name, url, key_file, "", cbOnStateChange);
+  }
+}
+
+function Install() {
+  var name = $('#name').val();
+  var url = $('#url').val();
+  var key_file = $('#key').val();
+  var ver = $('#ver').val();
+
+  ClearResult();
+  var cbOnStateChange = new UPluginCallback(OnStateChange, null);
+  gAppManager.install(name, url, key_file, ver, cbOnStateChange);
+}
+
+function Uninstall() {
+  var name = $('#name').val();
+
+  ClearResult();
+  var cbOnStateChange = new UPluginCallback(OnStateChange, null);
+  gAppManager.uninstall(name, cbOnStateChange);
+}
+
+function IsInstalled() {
+  var name = $('#name').val();
+
+  ClearResult();
+  $('#op_res').text("IsInstalled: " + gAppManager.isInstalled(name));
+}
+
+function ReloadAppList() {
+  var list = gAppManager.getAppList();
+  if (list == null || list.length == 0) {
+    $('#app_list').html('no UPlugin application found');
+    return;
+  }
+  var html = '<ul>';
+  for(var i in list) {
+    html += '<li>';
+    html += list[i].name;
+    html += '<br/>';
+    html += list[i].upd + ' | ';
+    html += list[i].ver + ' | ';
+    html += list[i].key + '';
+    html += '</li>';
+  }
+  html += '</ul>';
+  $('#app_list').html(html);
+}
+
+</script>
+
+</body>
+</html>

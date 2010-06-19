@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <windowsx.h>
 
+#include "UPlugin/Logger.h"
 #include "UPlugin/ScriptableBase.h"
 
 using namespace UPlugin;
@@ -21,7 +22,7 @@ ScriptablePluginObjectBase::~ScriptablePluginObjectBase()
 {
 	if (!m_has_window) return;
 	if (m_pWindow == NULL || m_pWindow->window == NULL) {
-		//TODO @@@ log
+		ERROR_LOG("ScriptablePluginObjectBase::~: m_pWindow, m_pWindow->window is NULL");
 		return;
 	}
 	SubclassWindow((HWND)m_pWindow->window, lpOldProc);

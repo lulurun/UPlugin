@@ -58,7 +58,7 @@ bool UPluginMethodMap<T>::invokeMethod(NPIdentifier i, const NPVariant *args, ui
 {
 	MethodMap_TYPE::iterator it = _map.find(i);
 	if (it == _map.end()) {
-		// TODO @@@ log not found;
+		// @@@ just not found;
 		return false;
 	}
 	Entry &e = it->second;

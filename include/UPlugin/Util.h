@@ -23,6 +23,7 @@ public:
 
 	static bool NPVariantParseDouble(NPVariant value, double* result);
 
+	static bool NPVariantParseBoolean(NPVariant value, bool* result);
 };
 
 };

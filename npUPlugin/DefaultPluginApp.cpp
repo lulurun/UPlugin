@@ -1,5 +1,7 @@
-#include <windows.h>
+#include <string>
 #include "DefaultPluginApp.h"
+#include "UPlugin/Env.h"
+#include "UPlugin/Logger.h"
 
 using namespace UPlugin;
 
@@ -20,10 +22,17 @@ bool DefaultPluginApp::HasMethod(NPIdentifier name)
 
 bool DefaultPluginApp::Invoke(NPIdentifier name, const NPVariant *args, uint32_t argCount, NPVariant *result)
 {
-#ifdef UPLUGIN_DOTNET
-	// TOTO @@@ remove managed code !!
-	MessageBox(NULL, "THIS IS DEFAULT PLUGIN", "UPLUGIN", MB_OK);
-#endif
+	std::string user_dir = Env::GetInstance()->getBaseUserDIR();
+	std::string prog_dir = Env::GetInstance()->getBaseProgramDIR();
+	std::string config_file = Env::GetInstance()->getConfigFile();
+
+	WARN_LOG("THIS IS DEFAULT PLUGIN");
+	DEBUG_LOG("base_user_dir: " << Env::GetInstance()->getBaseUserDIR());
+	DEBUG_LOG("program_dir: " << Env::GetInstance()->getBaseProgramDIR());
+	DEBUG_LOG("config_file: " << Env::GetInstance()->getConfigFile());
 	return true;
+}
+
+void DefaultPluginApp::shutdown() {
 }
 

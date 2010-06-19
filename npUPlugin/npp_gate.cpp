@@ -1,19 +1,23 @@
 #include "plugin.h"
+#include "UPlugin/Logger.h"
 
 using namespace UPlugin;
 
 char*NPP_GetMIMEDescription(void)
 {
+	TRACE_LOG("NPP_GetMIMEDescription");
 	return "application/x-uplugin";
 }
 
 NPError NPP_Initialize(void)
 {
+	TRACE_LOG("NPP_Initialize");
 	return NPERR_NO_ERROR;
 }
 
 void NPP_Shutdown(void)
 {
+	TRACE_LOG("NPP_Shutdown");
 }
 
 // here the plugin creates an instance of our nsPluginInstance object which 
@@ -22,6 +26,8 @@ void NPP_Shutdown(void)
 NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode,
 				int16_t argc, char* argn[], char* argv[], NPSavedData* saved)
 {
+	TRACE_LOG("NPP_New enter");
+
 	if(instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -33,13 +39,15 @@ NPError NPP_New(NPMIMEType pluginType, NPP instance, uint16_t mode,
 	plugin->onNPP_New(argc, argn, argv);
 	instance->pdata = plugin;
 
+	TRACE_LOG("NPP_New leave");
 	return rv;
 }
 
 // here is the place to clean up and destroy the nsPluginInstance object
 NPError NPP_Destroy(NPP instance, NPSavedData** save)
 {
-	return NPERR_NO_ERROR;
+	TRACE_LOG("NPP_Destroy enter");
+	//return NPERR_NO_ERROR;
 	if(instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -47,9 +55,11 @@ NPError NPP_Destroy(NPP instance, NPSavedData** save)
 
 	Plugin *plugin = (Plugin *)instance->pdata;
 	if(plugin != NULL) {
+		instance->pdata = NULL;
 		plugin->onNPP_Destroy();
 		delete plugin;
 	}
+	TRACE_LOG("NPP_Destroy leave");
 	return rv;
 }
 
@@ -58,6 +68,7 @@ NPError NPP_Destroy(NPP instance, NPSavedData** save)
 // initialization and shutdown
 NPError NPP_SetWindow(NPP instance, NPWindow* pNPWindow)
 {
+	TRACE_LOG("NPP_SetWindow enter");
 	if(instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -92,6 +103,7 @@ NPError NPP_SetWindow(NPP instance, NPWindow* pNPWindow)
 	if((pNPWindow->window == NULL) && !plugin->isWindowSet())
 		return NPERR_NO_ERROR;
 
+	TRACE_LOG("NPP_SetWindow leave");
 	return rv;
 }
 
@@ -106,6 +118,7 @@ NPError NPP_SetWindow(NPP instance, NPWindow* pNPWindow)
 // in the bin/components folder
 NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 {
+	TRACE_LOG("NPP_GetValue enter");
 	if(instance == NULL)
 		return NPERR_INVALID_INSTANCE_ERROR;
 
@@ -116,6 +129,7 @@ NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 	if (!plugin->onNPP_GetValue(variable, value)) {
 		return NPERR_GENERIC_ERROR;
 	}
+	TRACE_LOG("NPP_GetValue leave");
 	return NPERR_NO_ERROR;
 }
 
@@ -233,13 +247,20 @@ int16_t	NPP_HandleEvent(NPP instance, void* event)
 
 NPObject *NPP_GetScriptableInstance(NPP instance)
 {
-	if(!instance)
-		return NULL; // TODO @@@ log
+	TRACE_LOG("NPP_GetScriptableInstance enter");
+	if(!instance) {
+		ERROR_LOG("NPP_GetScriptableInstance: instance is NULL");
+		return NULL;
+	}
 
 	NPObject *npobj = NULL;
 	Plugin * plugin = (Plugin *)instance->pdata;
-	if (!plugin)
-		npobj = plugin->onNPP_GetScriptableInstance(); // TODO @@@ log when plugin == NULL;
+	if (plugin) {
+		npobj = plugin->onNPP_GetScriptableInstance();
+	} else {
+		ERROR_LOG("NPP_GetScriptableInstance: plugin is NULL");
+	}
 
+	TRACE_LOG("NPP_GetScriptableInstance leave");
 	return npobj;
 }

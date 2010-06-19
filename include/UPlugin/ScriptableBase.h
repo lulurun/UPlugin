@@ -33,6 +33,9 @@ namespace UPlugin {
 			return m_identifier;
 		}
 
+		// Called from onNPP_Destroy
+		virtual void shutdown() = 0;
+
 	public:
 		ScriptablePluginObjectBase(NPP npp);
 		virtual ~ScriptablePluginObjectBase();

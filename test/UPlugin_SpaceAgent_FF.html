@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>UPlugin Test Page - AppManager</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/UPlugin.js"></script>
+	<script type="text/javascript" src="js/UPlugin.SpaceAgent.js"></script>
+</head>
+<body>
+<h1>SpaceAgent</h1>
+<hr>
+
+<h3>Control SpaceAgent</h3>
+<ul>
+<li>
+Contents Base URL:
+<input type="text" id="contents_base_url" size="70" value="http://openugai.wolfdrawer.net/grid2.cgi/contents/data/">
+</li>
+<li>
+Contents UUID:
+<input type="text" id="contents_uuid" size="50" value="02c28944-4768-11df-ab6c-1137f4778202">
+</li>
+</ul>
+<input type="button" value="Init" onclick="InitSpaceAgent();">
+<input type="button" value="Destory" onclick="DestroySpaceAgent();">|
+<input type="button" value="Start" onclick="StartSpaceAgent();">
+<input type="button" value="Stop" onclick="StopSpaceAgent();">|
+<input type="button" value="StartSpace" onclick="StartSpace();">
+<input type="button" value="StopSpace" onclick="StopSpace();">
+<input type="button" value="LoadContents" onclick="LoadContents();">
+<br><br>
+<input type="button" value="Quick Start(init -> start -> load contents)" onclick="QuickStart();">
+<input type="button" value="Destory" onclick="DestroySpaceAgent();">
+
+<h5>Space Status</h5>
+<div id="space_status">
+<span id="SpaceAgent_status_label"></span>
+<span id="SpaceAgent_status_loading_img"></span>
+</div>
+
+<h5>Message:</h5>
+<div id="result">-</div>
+
+<script language="javascript">
+
+var base_url = $('#contents_base_url').val();
+var contents_uuid = $('#contents_uuid').val();
+
+$(document).ready(function(){
+  InitSpaceAgent();
+});
+
+function UpdateStatus(code) {
+  var msg = gSpaceAgent.MESSAGE(code);
+  SetResult("STATE CHANGE! " + msg);
+  $('#SpaceAgent_status_label').text(msg);
+  if (code == gSpaceAgent.STATE.SHUTDOWN ||
+      code == gSpaceAgent.STATE.STARTUP ||
+      code == gSpaceAgent.STATE.LOCAL_START ||
+      code == gSpaceAgent.STATE.LOAD_CONTENTS ||
+      code == gSpaceAgent.STATE.LOAD_CONTENTS_30) {
+    $('#SpaceAgent_status_loading_img').html(gLoadingGIF);
+  } else {
+    $('#SpaceAgent_status_loading_img').empty();
+  }
+}
+
+function QuickStart() {
+  ClearResult();
+  gSpaceAgent.destroy();
+  var OnStateChange = new UPluginCallback(function(cp, lp){
+    UpdateStatus(cp.code);
+    if (cp.code == gSpaceAgent.STATE.STARTED_NOCONTENTS) {
+      gSpaceAgent.load_contents(contents_uuid);
+    }
+  }, null);
+  gSpaceAgent.init(base_url, OnStateChange);
+  if (gSpaceAgent.StatusCode() == gSpaceAgent.STATE.STARTED_NOCONTENTS ||
+      gSpaceAgent.StatusCode() == gSpaceAgent.STATE.CONTENTS_READY) {
+    gSpaceAgent.load_contents(contents_uuid);
+  } else {
+    gSpaceAgent.start_space();
+  }
+  gSpaceAgent.start();
+}
+
+function InitSpaceAgent() {
+  ClearResult();
+  var OnStateChange = new UPluginCallback(function(cp, lp){
+    UpdateStatus(cp.code);
+  }, null);
+  gSpaceAgent.init(base_url, OnStateChange);
+  SetResult("Inited OK, base url: " + base_url);
+}
+
+function DestroySpaceAgent() {
+  ClearResult();
+  gSpaceAgent.destroy();
+}
+
+// /////////////////
+// //////
+function StartSpaceAgent() {
+	ClearResult();
+	gSpaceAgent.start();
+}
+
+function StopSpaceAgent() {
+	ClearResult();
+	gSpaceAgent.stop();
+}
+
+function StartSpace() {
+	ClearResult();
+	gSpaceAgent.start_space();
+}
+
+function StopSpace() {
+	ClearResult();
+	gSpaceAgent.stop_space();
+}
+
+function LoadContents() {
+	ClearResult();
+	gSpaceAgent.load_contents(contents_uuid);
+}
+
+function SetResult(res) {
+	$('#result').text(res);
+}
+
+function ClearResult() {
+	SetResult('-');
+}
+
+</script>
+
+</body>
+</html>
+

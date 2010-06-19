@@ -1,6 +1,9 @@
 #ifdef UPLUGIN_DOTNET
 
+#pragma once
+
 #include "UPlugin/Env.h"
+#include "UPlugin/Logger.h"
 #include "UPlugin/ScriptableBase.h"
 
 namespace UPlugin {
@@ -28,7 +31,7 @@ private:
 		Assembly ^assm = AppDomain::CurrentDomain->Load(AssemblyName::GetAssemblyName(dll_path_managed));
 		m_support = assm->CreateInstance("UPlugin.DotNet.DotNetSupport");
 		if (m_support == nullptr) {
-			// TODO @@@ log
+			ERROR_LOG("can not find DotNetSupport from " << dll_path);
 		}
 	};
 
@@ -81,4 +84,4 @@ public:
 
 }
 
-#endif
+#endif // UPLUGIN_DOTNET

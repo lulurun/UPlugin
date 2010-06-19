@@ -1,8 +1,9 @@
 #pragma once
 
 #include "UPlugin/ScriptableObject.h"
+#include "UPlugin/Logger.h"
 
-using namespace System;
+//using namespace System;
 using namespace UPlugin;
 
 class HelloWorldPlugin : public ScriptablePluginObject<HelloWorldPlugin>
@@ -13,7 +14,6 @@ public:
 	HelloWorldPlugin()
 		: ScriptablePluginObject()
 	{
-		m_identifier = "HelloWorld";
 	}
 	HelloWorldPlugin(NPP npp)
 		: ScriptablePluginObject(npp)
@@ -27,10 +27,13 @@ public:
 	};
 
 	bool say(const NPVariant *args, uint32_t argCount, NPVariant *result) {
-		System::Windows::Forms::MessageBox::Show(gcnew System::String(_message.c_str()));
+		//System::Windows::Forms::MessageBox::Show(gcnew System::String(_message.c_str()));
+		ERROR_LOG(this->_message);
 		return true;
 	};
 
+	// called from UPlugin when UPlugin is unloaded
+	virtual void shutdown() { /* nothing to be done */ };
 };
 
 DECLARE_UPLUGIN_APP_CLASS(HelloWorldPlugin);

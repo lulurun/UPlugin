@@ -22,7 +22,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="2"
-			ManagedExtensions="1"
+			ManagedExtensions="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\include\xulrunner-sdk&quot;;..\..\include"
-				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;"
+				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;_DEBUG;POCO_STATIC;"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -63,7 +63,7 @@
 				AdditionalDependencies="npPlugin.lib"
 				OutputFile="..\..\bin\App\HelloWorld\$(ProjectName).dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\lib"
+				AdditionalLibraryDirectories="..\..\lib;..\..\extlib"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="1"
@@ -118,7 +118,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				AdditionalIncludeDirectories="&quot;..\..\include\xulrunner-sdk&quot;;..\..\include"
-				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;NDEBUG;UPLUGIN_EXPORTS"
+				PreprocessorDefinitions="_WINDOWS;WIN32;XP_WIN;_X86_;NDEBUG;POCO_STATIC;"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -136,9 +136,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="npPlugin.lib"
-				OutputFile="..\bin\$(ProjectName).dll"
+				OutputFile="..\..\bin\$(ProjectName).dll"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="..\..\lib"
+				AdditionalLibraryDirectories="..\..\lib;..\..\extlib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -166,26 +166,6 @@
 		</Configuration>
 	</Configurations>
 	<References>
-		<AssemblyReference
-			RelativePath="System.dll"
-			AssemblyName="System, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-			MinFrameworkVersion="131072"
-		/>
-		<AssemblyReference
-			RelativePath="System.Data.dll"
-			AssemblyName="System.Data, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=x86"
-			MinFrameworkVersion="131072"
-		/>
-		<AssemblyReference
-			RelativePath="System.XML.dll"
-			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-			MinFrameworkVersion="131072"
-		/>
-		<AssemblyReference
-			RelativePath="System.Windows.Forms.dll"
-			AssemblyName="System.Windows.Forms, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
-			MinFrameworkVersion="131072"
-		/>
 	</References>
 	<Files>
 		<Filter

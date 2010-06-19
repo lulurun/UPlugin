@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>UPlugin - ViewerLauncher Test Page</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/UPlugin.js"></script>
+	<script type="text/javascript" src="js/UPlugin.ViewerLauncher.js"></script>
+</head>
+
+<body>
+<h1>UPlugin - ViewerLauncher</h1>
+
+<h3>Login Parameter</h3>
+
+<table>
+<tr><td>first</td><td><input id="first" value="Region"/></td></tr>
+<tr><td>last</td><td><input id="last" value="Admin"/></td></tr>
+<tr><td>password</td><td><input id="password" value="password"/></td></tr>
+<tr><td>loginserver</td><td><input size="70" id="loginserver" value="http://openugai.wolfdrawer.net/space_login.cgi"/></td></tr>
+<tr><td>location</td><td><input size="70" id="location" value="uri:2b5e8e4d-f0a9-442c-a861-a2c17e081add&128&128&128"/></td></tr>
+</table>
+
+<h3>Installed Viewer</h3>
+<div id="ViewerList"></div>
+
+	<script language="javascript">
+<!--
+$(document).ready(function(){
+  gViewerLauncher.init();
+  var list = gViewerLauncher.getViewerList();
+  var html = '';
+  for(var i in list) {
+    html += '<button onclick="Launch(\'' + list[i] + '\')">' + list[i] + '</button>';
+  }
+  $('#ViewerList').html(html);
+});
+
+function Launch(name) {
+  var first = $('#first').val();
+  var last = $('#last').val();
+  var password = $('#password').val();
+  var loginserver = $('#loginserver').val();
+  var location = $('#location').val();
+  gViewerLauncher.launch(name, first, last, password, loginserver, location);
+}
+
+-->
+	</script>
+
+</body>
+
+</html>

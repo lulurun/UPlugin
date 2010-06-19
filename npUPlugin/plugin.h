@@ -46,7 +46,7 @@ private:
 	bool m_windowset;
 	HWND mhWnd;
 
-	AppManager m_app_mgr;
+	//AppManager m_app_mgr;
 
 	// app settings
 	std::string m_app_name;

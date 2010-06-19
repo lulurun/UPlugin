@@ -1,0 +1,10 @@
+Install_DIR = E:\UPlugin\git_repo\bin
+Data_DIR = E:\UPlugin\git_repo\bin
+
+[SpaceAgent]
+AppExePath = C:\Program Files\UPlugin\ExtApp\Space\SpaceApp.exe
+Shutdown_URL = http://127.0.0.1:7475/AgentService/shutdown
+LoadContents_URL = http://127.0.0.1:7475/AgentService/loadContents
+GetStatus_URL = http://127.0.0.1:7475/AgentService/status
+RunForeground = false
+
