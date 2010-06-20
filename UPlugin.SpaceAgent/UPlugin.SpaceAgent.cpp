@@ -1,4 +1,5 @@
 #include "UPlugin/Env.h"
+#include "UPlugin/Logger.h"
 #include "UPlugin.SpaceAgent.h"
 
 using namespace System;
@@ -112,8 +113,9 @@ bool SpaceAgentPlugin::runSpace(const NPVariant *args, uint32_t argCount, NPVari
 		}
 		System::Diagnostics::Process::Start(psi);
 		BOOLEAN_TO_NPVARIANT(true, *result);
-	} catch (System::Exception ^e) {
+	} catch (System::Exception ^) {
 		// TODO @@@ log
+		ERROR_LOG("Error start space. .Net exception");
 		return false;
 	}
 	return true;
@@ -125,8 +127,9 @@ bool SpaceAgentPlugin::shutdownSpace(const NPVariant *args, uint32_t argCount, N
 	try {
 		bool res = this->_shutdownSpace();
 		BOOLEAN_TO_NPVARIANT(res, *result);
-	} catch (System::Exception ^e) {
+	} catch (System::Exception ^) {
 		// TODO @@@ log
+		ERROR_LOG("Error stop space. .Net exception");
 		BOOLEAN_TO_NPVARIANT(false, *result);
 		return false;
 	}
@@ -184,8 +187,9 @@ bool SpaceAgentPlugin::loadContents(const NPVariant *args, uint32_t argCount, NP
 		} else {
 			BOOLEAN_TO_NPVARIANT(false, *result);
 		}
-	} catch (System::Exception ^e) {
+	} catch (System::Exception ^) {
 		// TODO @@@ log
+		ERROR_LOG("Error load contents. .Net exception");
 		return false;
 	}
 	return true;
@@ -213,8 +217,9 @@ bool SpaceAgentPlugin::getStatus(const NPVariant *args, uint32_t argCount, NPVar
 			int res_int = System::Convert::ToInt32(res);
 			INT32_TO_NPVARIANT(res_int, *result);
 		}
-	} catch (System::Exception ^e) {
+	} catch (System::Exception ^) {
 		// TODO @@@ log
+		ERROR_LOG("Error get status. .Net exception");
 		return false;
 	}
 	return true;

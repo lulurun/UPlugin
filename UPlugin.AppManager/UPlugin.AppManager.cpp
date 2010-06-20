@@ -198,6 +198,7 @@ private:
 			}
 			return true;
 		} catch (std::exception &e) {
+			ERROR_LOG("Error read entry: " << e.what());
 			return false;
 		}
 	}

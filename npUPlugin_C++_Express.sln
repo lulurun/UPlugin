@@ -11,10 +11,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPlugin.HelloWorld", "examp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPlugin.AppManager", "UPlugin.AppManager\UPlugin.AppManager.vcproj", "{2468C714-9785-4828-83CE-DDBDB4C5DE8E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0241E11-B2EC-4BCF-ABCC-EC382A370703} = {A0241E11-B2EC-4BCF-ABCC-EC382A370703}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPlugin.SpaceAgent", "UPlugin.SpaceAgent\UPlugin.SpaceAgent.vcproj", "{3B66ABCE-C943-4AFF-91F2-71B919464A16}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0241E11-B2EC-4BCF-ABCC-EC382A370703} = {A0241E11-B2EC-4BCF-ABCC-EC382A370703}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UPlugin.ViewerLauncher", "UPlugin.ViewerLauncher\UPlugin.ViewerLauncher.vcproj", "{56889F73-266B-46A1-8212-DE91C0ADA1E3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0241E11-B2EC-4BCF-ABCC-EC382A370703} = {A0241E11-B2EC-4BCF-ABCC-EC382A370703}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
