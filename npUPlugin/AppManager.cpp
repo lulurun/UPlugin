@@ -153,12 +153,12 @@ void AppManager::destoryScriptable() {
 		delete m_library;
 	}
 */
-	/*
+#ifdef UPLUGIN_DOTNET
 	if (m_library_dotnetsupport) {
 		m_library_dotnetsupport->unload();
 		delete m_library_dotnetsupport;
 	}
-	*/
+#endif
 }
 
 std::string AppManager::GetAppDLLPath(const std::string &name, const std::string &dllname) {
@@ -169,6 +169,7 @@ std::string AppManager::GetAppDLLPath(const std::string &name, const std::string
 		return p.toString();
 	}
 	else {
+		// TODO @@@ get the dll by finding "CreateInstance_" symbol
 		std::string app_dll_name;
 		if (dllname.empty()) {
 			app_dll_name = Env::GetUPluginAPPDLL(name);

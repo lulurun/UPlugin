@@ -23,8 +23,6 @@ public:
 	static void Initialize();
 };
 
-#ifdef _DEBUG
-
 #ifndef WIN32
 #define TRACE_LOG(message)	\
 	{ UPlugin::Logger::GetLogStream()->trace() << __PRETTY_FUNCTION__ << " " << message << std::endl; }
@@ -32,13 +30,9 @@ public:
 #define TRACE_LOG(...) \
 	{ UPlugin::Logger::GetLogStream()->trace() << __VA_ARGS__ << std::endl; }
 #endif
+
 #define DEBUG_LOG(...)	\
 	{ UPlugin::Logger::GetLogStream()->debug() << __VA_ARGS__ << std::endl; }
-#else
-#define TRACE_LOG(message)
-#define DEBUG_LOG(...)
-#endif
-
 #define INFO_LOG(...)	\
 	{ UPlugin::Logger::GetLogStream()->information() << __VA_ARGS__ << std::endl; }
 #define WARN_LOG(...)	\

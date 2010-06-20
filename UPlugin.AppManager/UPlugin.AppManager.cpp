@@ -62,17 +62,15 @@ public:
 	std::string name;
 	std::string dir;
 	std::string ver;
-	std::string key_file;
 	time_t last_upd;
 
 	AppInfo():last_upd(0) {}
 	static const std::string META_FILE;
 
-	AppInfo(const std::string &name, const std::string &dir, const std::string &ver, const std::string &key_file, int last_upd=0) {
+	AppInfo(const std::string &name, const std::string &dir, const std::string &ver, int last_upd=0) {
 		this->name = name;
 		this->dir = dir;
 		this->ver = ver;
-		this->key_file = key_file;
 		this->last_upd = last_upd;
 	}
 
@@ -82,7 +80,6 @@ public:
 			p.append(META_FILE);
 			std::ofstream ofs(p.toString().c_str());
 			ofs << this->ver << std::endl;
-			ofs << this->key_file << std::endl;
 			Poco::File f(p);
 			this->last_upd = f.created().epochTime();
 		} else {
@@ -95,8 +92,7 @@ public:
 		ret.append(Poco::format("name:'%s',", this->name));
 		ret.append(Poco::format("dir:'%s',", this->dir));
 		ret.append(Poco::format("ver:'%s',", this->ver));
-		ret.append(Poco::format("key:'%s',", this->key_file));
-		ret.append(Poco::format("upd:'%d'", this->last_upd));
+		ret.append(Poco::format("upd:'%lld'", this->last_upd));
 		ret.append("}");
 		return ret;
 	}
@@ -107,15 +103,12 @@ public:
 		Poco::Path p = dir_path;
 		p.append(META_FILE);
 		Poco::File f(p);
+
 		if(f.exists()) {
 			std::ifstream ifs(p.toString().c_str());
 			if (!getline(ifs, ret.ver)) {
 				WARN_LOG("can not get version for " << name);
 				ret.ver = "0.0.0.0";
-			}
-			if (!getline(ifs, ret.key_file)) {
-				WARN_LOG("can not get key_file for " << name);
-				ret.key_file = "";
 			}
 			ret.last_upd =  f.created().epochTime();
 			ret.name = name;
@@ -257,11 +250,10 @@ struct InstallThread_Param {
 	std::string name;
 	std::string url;
 	std::string version;
-	std::string key_file;
 	AppManagerPlugin &plugin;
 
-	InstallThread_Param(const std::string &name, const std::string &url, const std::string &version, const std::string &key_file, AppManagerPlugin &plugin)
-		: name(name), url(url), version(version), key_file(key_file), plugin(plugin) {}
+	InstallThread_Param(const std::string &name, const std::string &url, const std::string &version, AppManagerPlugin &plugin)
+		: name(name), url(url), version(version), plugin(plugin) {}
 };
 
 void InstallThread_Handler(void *data) {
@@ -278,6 +270,7 @@ void InstallThread_Handler(void *data) {
 	s.sendRequest(request);
 	Poco::Net::HTTPResponse response;
 	std::istream& rs = s.receiveResponse(response);
+	// TODO @@@ handle if response != 200
 
 	// Unzip & Install
 	param->plugin.setState(AppManagerPlugin::EXTRACT_PKG);
@@ -288,14 +281,19 @@ void InstallThread_Handler(void *data) {
 	temp_dir.append(Poco::Path(param->name + "_tmp"));
 
 	try {
+		DEBUG_LOG("AppManager::ExtractPKG: " << temp_dir.toString());
+
 		ArchiveReader::ExtractPKG(rs, temp_dir.toString());
 
 		param->plugin.setState(AppManagerPlugin::INSTALL);
+
+		DEBUG_LOG("remove current installnation: " << inst_dir.toString());
 		// TODO @@@ stop/unload the app if running
 		{
 			Poco::File f(inst_dir);
 			if (f.exists()) f.remove(true);
 		}
+		DEBUG_LOG("rename tmp to install: " << temp_dir.toString());
 		{
 			Poco::File f(temp_dir);
 			if (f.exists()) {
@@ -303,7 +301,7 @@ void InstallThread_Handler(void *data) {
 			}
 		}
 	} catch (Poco::Exception &e) {
-		ERROR_LOG("install failed" << e.displayText());
+		ERROR_LOG("install failed " << e.displayText());
 		param->plugin.setState(AppManagerPlugin::_ERROR);
 		// clean up
 		Poco::File f(temp_dir);
@@ -317,7 +315,6 @@ void InstallThread_Handler(void *data) {
 	inst_dir.append(AppInfo::META_FILE);
 	std::ofstream ofs(inst_dir.toString().c_str());
 	ofs << param->version << std::endl;
-	ofs << param->key_file << std::endl;
 	ofs.close();
 
 	param->plugin.setState(AppManagerPlugin::FINISH);
@@ -337,19 +334,17 @@ bool AppManagerPlugin::Install(const NPVariant *args, uint32_t argCount, NPVaria
 	std::string name(args[0].value.stringValue.UTF8Characters);
 	if (name.empty()) return false;
 	TRACE_LOG("install " << name);
-
 	std::string url(args[1].value.stringValue.UTF8Characters);
 	if (url.empty()) return false;
-	std::string key_file;
-	if (argCount > 2) key_file = args[2].value.stringValue.UTF8Characters;
 	std::string version;
-	if (argCount > 3) version = args[3].value.stringValue.UTF8Characters;
-	if (key_file.empty()) key_file = Env::GetUPluginAPPDLL(name);
+	if (argCount > 2) version = args[2].value.stringValue.UTF8Characters;
 
-	this->setState(AppManagerPlugin::CHK_VERSION);
+	DEBUG_LOG("AppManager::Install " << name << " " << url << " " << version);
+
+	this->setState(AppManagerPlugin::CHK_VERSION); // TODO @@@ version is checked by JavaScript, remove this STATE
 
 	m_thread = new Poco::Thread(m_identifier.append("_").append(name));
-	std::auto_ptr<InstallThread_Param> param(new InstallThread_Param(name, url, version, key_file, *this));
+	std::auto_ptr<InstallThread_Param> param(new InstallThread_Param(name, url, version, *this));
 	m_thread->start(InstallThread_Handler, param.release());
 
 	return true;

@@ -31,6 +31,7 @@ ViewerLauncherPlugin::ViewerLauncherPlugin()
 ViewerLauncherPlugin::ViewerLauncherPlugin(NPP npp)
 	:ScriptablePluginObject(npp)
 {
+	TRACE_LOG("ViewerLauncherPlugin enter");
 	m_identifier = "ViewerLauncher";
 
 	m_supportedviewers.push_back("SecondLife");
@@ -39,7 +40,9 @@ ViewerLauncherPlugin::ViewerLauncherPlugin(NPP npp)
 	m_supportedviewers.push_back("RealXtend 3Di");
 	// get installed viewer
 	for(std::vector<std::string>::iterator it=m_supportedviewers.begin(); it!=m_supportedviewers.end(); it++) {
+		ERROR_LOG("viewer: " << *it);
 		if (this->isInstalled(*it)) {
+			DEBUG_LOG("find viewer: " << *it);
 			m_installedviewers.push_back(*it);
 		}
 	}
@@ -47,6 +50,7 @@ ViewerLauncherPlugin::ViewerLauncherPlugin(NPP npp)
 	register_method("ViewerList", this, &ViewerLauncherPlugin::getInstalledViewers);
 	register_method("Launch", this, &ViewerLauncherPlugin::launch);
 	register_method("Close", this, &ViewerLauncherPlugin::close);
+	TRACE_LOG("ViewerLauncherPlugin leave");
 }
 
 ViewerLauncherPlugin::~ViewerLauncherPlugin()
@@ -78,6 +82,7 @@ std::string ViewerLauncherPlugin::getViewerPath(const std::string &name) {
 
 bool ViewerLauncherPlugin::isInstalled(const std::string &name) {
 	std::string path = this->getViewerPath(name);
+	DEBUG_LOG("ViewerLauncherPlugin::isInstalled " << path);
 	Poco::File f(path);
 	return f.exists();
 }

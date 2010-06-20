@@ -136,7 +136,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="npPlugin.lib"
-				OutputFile="..\..\bin\$(ProjectName).dll"
+				OutputFile="..\bin\App\HelloWorld\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\lib;..\..\extlib"
 				GenerateDebugInformation="true"

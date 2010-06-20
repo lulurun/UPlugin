@@ -21,6 +21,7 @@ var gViewerLauncher = gViewerLauncher || {
 	},
 	getViewerList : function() {
 		var res_json = this._obj().ViewerList();
+		alert(res_json);
 		return eval('(' + res_json + ')');
 	},
 	launch : function(name, first, last, password, loginserver, location) {
